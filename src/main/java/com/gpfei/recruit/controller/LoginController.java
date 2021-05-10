@@ -28,7 +28,6 @@ public class LoginController {
 
     @Autowired
     LoginService loginService;
-
     //注册
     @PostMapping("registuser")
     public Msg registuser(@RequestBody Login login) {
@@ -42,7 +41,6 @@ public class LoginController {
             return Msg.success().add("data",row == true ? "ok" : "error");
         }
     }
-
     //登录
     @PostMapping("login")
     public Msg login(String username,String password){

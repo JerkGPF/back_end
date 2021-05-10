@@ -43,14 +43,18 @@ public class LoginController {
     }
     //登录
     @PostMapping("login")
-    public Msg login(String username,String password){
+    public Msg login(@RequestBody Login login){
+        System.out.println("username:" + login.getUsername() + "," + "password" + login.getPassword());
         QueryWrapper<Login> lambdaQueryWrapper = new QueryWrapper<>();
-        lambdaQueryWrapper.eq("username",username).and(login->login.eq("password",password));
+        lambdaQueryWrapper.eq("username",login.getUsername()).and(msg->msg.eq("password",login.getPassword()));
         List<Login> logins = loginService.list(lambdaQueryWrapper);
         if (logins.size() != 0){
+            System.out.println(Msg.success().add("data",logins.toArray()));
             return Msg.success().add("data",logins.toArray());
         }else {
+            System.out.println("error");
             return Msg.fail().add("data","error");
+
         }
     }
 }

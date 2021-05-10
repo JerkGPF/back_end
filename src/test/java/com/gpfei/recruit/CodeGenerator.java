@@ -17,6 +17,12 @@ import org.junit.Test;
  */
 public class CodeGenerator {
 
+
+    @Test
+    public void s(){
+        System.out.println(0xffffffff);
+    }
+
     @Test
     public void run() {
 

@@ -41,8 +41,11 @@ public class Companyinfo implements Serializable {
     @ApiModelProperty(value = "公司简介")
     private String profile;
 
+    @ApiModelProperty(value = "公司邮箱")
+    private String email;
+
     @ApiModelProperty(value = "登录id")
-    private Integer loginid;
+    private String username;
 
 
 }

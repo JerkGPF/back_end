@@ -1,7 +1,10 @@
 package com.gpfei.recruit.entity;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
 import java.util.Date;
+
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
 import io.swagger.annotations.ApiModel;
@@ -31,13 +34,15 @@ public class Sign implements Serializable {
     private Integer intergal;
 
     @ApiModelProperty(value = "创建日期")
+    @TableField(fill = FieldFill.INSERT)
     private Date create;
 
     @ApiModelProperty(value = "最后修改日期")
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     private Date update;
 
     @ApiModelProperty(value = "登录id")
-    private Integer loginid;
+    private String username;
 
 
 }

@@ -36,6 +36,4 @@ public class Login implements Serializable {
     @ApiModelProperty(value = "是否HR，1TRUE，0FALSE")
     @TableField("isHR")
     private Boolean isHR;
-
-
 }

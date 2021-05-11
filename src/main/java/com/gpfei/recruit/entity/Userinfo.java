@@ -63,7 +63,7 @@ public class Userinfo implements Serializable {
     private String file;
 
     @ApiModelProperty(value = "登录id")
-    private Integer loginid;
+    private String username;
 
 
 }

@@ -3,6 +3,7 @@ package com.gpfei.recruit.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.gpfei.recruit.entity.Login;
 import com.gpfei.recruit.entity.Userinfo;
@@ -55,6 +56,19 @@ public class LoginController {
             System.out.println("error");
             return Msg.fail().add("data","error");
 
+        }
+    }
+    //修改密码
+    @PostMapping("modifyPass")
+    public Msg modify(@RequestBody Login login){
+        LambdaUpdateWrapper<Login> lambdaUpdateWrapper = Wrappers.lambdaUpdate();
+        lambdaUpdateWrapper.eq(Login::getUsername,login.getUsername())
+                .set(Login::getPassword,login.getPassword());
+        boolean row = loginService.update(null,lambdaUpdateWrapper);
+        if (row == true){
+            return Msg.success();
+        }else {
+            return Msg.fail();
         }
     }
 }

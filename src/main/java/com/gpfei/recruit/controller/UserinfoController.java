@@ -81,5 +81,13 @@ public class UserinfoController {
         }
     }
 
+    //企业获取所有的员工信息
+    @GetMapping("getAll")
+    public Msg findAllUser(){
+        List<Userinfo> list = userinfoService.list(null);
+        return Msg.success().add("data",list);
+    }
+
+
 }
 

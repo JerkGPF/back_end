@@ -27,7 +27,7 @@ public class Sign implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @TableId(value = "id", type = IdType.ID_WORKER_STR)
+    @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
     @ApiModelProperty(value = "积分数量")
@@ -35,11 +35,11 @@ public class Sign implements Serializable {
 
     @ApiModelProperty(value = "创建日期")
     @TableField(fill = FieldFill.INSERT)
-    private Date create;
+    private Date createTime;
 
     @ApiModelProperty(value = "最后修改日期")
     @TableField(fill = FieldFill.INSERT_UPDATE)
-    private Date update;
+    private Date updateTime;
 
     @ApiModelProperty(value = "登录id")
     private String username;

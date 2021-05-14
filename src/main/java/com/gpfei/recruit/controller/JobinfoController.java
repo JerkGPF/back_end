@@ -3,10 +3,13 @@ package com.gpfei.recruit.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.Update;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.gpfei.recruit.entity.Jobinfo;
+import com.gpfei.recruit.entity.Resume;
 import com.gpfei.recruit.entity.Userinfo;
 import com.gpfei.recruit.service.JobinfoService;
+import com.gpfei.recruit.service.ResumeService;
 import com.gpfei.recruit.utils.Msg;
 import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +30,9 @@ import java.util.List;
 public class JobinfoController {
     @Autowired
     JobinfoService jobinfoService;
+
+    @Autowired
+    ResumeService resumeService;
     //1.根据类别获取所有的职位信息
     @GetMapping("findAll")
     public Msg findAllJob(String kind){
@@ -87,7 +93,20 @@ public class JobinfoController {
     @PostMapping("deleteJobById")
     public Msg deleteJobById(@RequestBody Jobinfo jobinfo){
         boolean b = jobinfoService.removeById(jobinfo);
-        return b?Msg.success():Msg.fail();
+        if (b){
+            LambdaQueryWrapper<Resume> lambdaQueryWrapper = Wrappers.lambdaQuery();
+            lambdaQueryWrapper.eq(Resume::getJobid,jobinfo.getId());
+            List<Resume> list = resumeService.list(lambdaQueryWrapper);
+            if (list.size() != 0){
+                LambdaUpdateWrapper<Resume> lambdaUpdateWrapper = Wrappers.lambdaUpdate();
+                lambdaUpdateWrapper.eq(Resume::getJobid,jobinfo.getId())
+                        .set(Resume::getIsdelete,true);
+                resumeService.update(lambdaUpdateWrapper);
+            }
+            return Msg.success();
+        }else {
+            return Msg.fail();
+        }
     }
 }
 

@@ -1,8 +1,10 @@
 package com.gpfei.recruit.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.*;
+
 import java.io.Serializable;
+import java.util.Date;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -45,7 +47,12 @@ public class Jobinfo implements Serializable {
     private String kind;
 
     @ApiModelProperty(value = "发布公司id")
-    private Integer companyid;
+    private String username;
 
+    @ApiModelProperty(value = "公司名称")
+    private String companyname;
+
+    @TableField(fill = FieldFill.INSERT)
+    private Date createtime;
 
 }

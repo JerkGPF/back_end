@@ -75,5 +75,11 @@ public class CompanyinfoController {
         }
     }
 
+    //通过id获取公司信息
+    @GetMapping("getCompanyById")
+    public Msg getCompanyById(String id){
+        Companyinfo companyinfo = companyinfoService.getById(id);
+        return Msg.success().add("company",companyinfo);
+    }
 }
 

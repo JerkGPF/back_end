@@ -41,5 +41,7 @@ public class Resume implements Serializable {
     @ApiModelProperty(value = "职位id")
     private Integer jobid;
 
+    @ApiModelProperty(value = "是否删除")
+    private Boolean isdelete;
 
 }

@@ -68,7 +68,7 @@ public class UserinfoController {
 
     //获取信息
     @GetMapping("getUserInfo")
-    public Msg getCompanyInfoByUserName(String username){
+    public Msg getUserInfoByUserName(String username){
         LambdaQueryWrapper<Userinfo> lambdaQueryWrapper = Wrappers.lambdaQuery();
         lambdaQueryWrapper.eq(Userinfo::getUsername,username);
         List<Userinfo> userinfos = userinfoService.list(lambdaQueryWrapper);
@@ -79,6 +79,11 @@ public class UserinfoController {
             System.out.println("error");
             return Msg.fail().add("data","error");
         }
+    }
+    @GetMapping("getUserInfoById")
+    public Msg getUserInfoById(Integer id){
+        Userinfo userinfo = userinfoService.getById(id);
+        return Msg.success().add("data",userinfo);
     }
 
     //企业获取所有的员工信息

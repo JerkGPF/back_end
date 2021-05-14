@@ -55,7 +55,6 @@ public class LoginController {
         }else {
             System.out.println("error");
             return Msg.fail().add("data","error");
-
         }
     }
     //修改密码
@@ -70,6 +69,14 @@ public class LoginController {
         }else {
             return Msg.fail();
         }
+    }
+
+    @GetMapping("getIsHr")
+    public Msg getIsHr(String username){
+        LambdaQueryWrapper<Login> lambdaQueryWrapper = Wrappers.lambdaQuery();
+        lambdaQueryWrapper.eq(Login::getUsername,username);
+        List<Login> list = loginService.list(lambdaQueryWrapper);
+        return Msg.success().add("data",list.toArray());
     }
 }
 

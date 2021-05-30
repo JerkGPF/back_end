@@ -116,7 +116,8 @@ public class ResumeController {
     @GetMapping("getbycompany")
     public Msg getbycompany(Integer companyid){
         LambdaQueryWrapper<Resume> lambdaQueryWrapper = Wrappers.lambdaQuery();
-        lambdaQueryWrapper.eq(Resume::getCompanyid,companyid).and(msg->msg.eq(Resume::getDelivery,true));
+        lambdaQueryWrapper.eq(Resume::getCompanyid,companyid).and(msg->msg.eq(Resume::getDelivery,true))
+                .and(msg->msg.eq(Resume::getIsdelete,false));
         List<Resume> list = resumeService.list(lambdaQueryWrapper);
         List<Jobinfo> jobinfoList = new ArrayList<>();
         Jobinfo jobinfo;

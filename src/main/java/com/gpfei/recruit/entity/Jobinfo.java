@@ -52,6 +52,8 @@ public class Jobinfo implements Serializable {
     @ApiModelProperty(value = "公司名称")
     private String companyname;
 
+    private Boolean isdeleted;
+
     @TableField(fill = FieldFill.INSERT)
     private Date createtime;
 

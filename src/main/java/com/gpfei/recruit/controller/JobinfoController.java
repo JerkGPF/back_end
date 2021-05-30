@@ -37,7 +37,7 @@ public class JobinfoController {
     @GetMapping("findAll")
     public Msg findAllJob(String kind){
         LambdaQueryWrapper<Jobinfo> lambdaQueryWrapper = Wrappers.lambdaQuery();
-        lambdaQueryWrapper.eq(Jobinfo::getKind,kind);
+        lambdaQueryWrapper.eq(Jobinfo::getKind,kind).and(msg->msg.eq(Jobinfo::getIsdeleted,false));
         List<Jobinfo> list = jobinfoService.list(lambdaQueryWrapper);
         return Msg.success().add("data",list);
     }
@@ -65,8 +65,11 @@ public class JobinfoController {
     //先查找到
     @GetMapping("getJobById")
     public Msg getJobById(Integer id){
-        Jobinfo jobinfo = jobinfoService.getById(id);
-        return Msg.success().add("data",jobinfo);
+        LambdaQueryWrapper<Jobinfo> lambdaQueryWrapper = Wrappers.lambdaQuery();
+        lambdaQueryWrapper.eq(Jobinfo::getId,id).eq(Jobinfo::getIsdeleted,false);
+        List<Jobinfo> list = jobinfoService.list(lambdaQueryWrapper);
+        //Jobinfo jobinfo = jobinfoService.getById(id);
+        return Msg.success().add("data",list);
     }
     //修改职位信息
     @PostMapping("updateJobById")
@@ -78,7 +81,8 @@ public class JobinfoController {
     @GetMapping("getJob")
     public Msg getJob(String username,String kind){
         LambdaQueryWrapper<Jobinfo> lambdaQueryWrapper = Wrappers.lambdaQuery();
-        lambdaQueryWrapper.eq(Jobinfo::getUsername,username).and(msg->msg.eq(Jobinfo::getKind,kind));
+        lambdaQueryWrapper.eq(Jobinfo::getUsername,username).and(msg->msg.eq(Jobinfo::getKind,kind))
+                .and(msg->msg.eq(Jobinfo::getIsdeleted,false));
         List<Jobinfo> jobinfos = jobinfoService.list(lambdaQueryWrapper);
         if (jobinfos.size() != 0){
             System.out.println(Msg.success().add("data",jobinfos.toArray()));
@@ -92,7 +96,8 @@ public class JobinfoController {
     //修改职位信息
     @PostMapping("deleteJobById")
     public Msg deleteJobById(@RequestBody Jobinfo jobinfo){
-        boolean b = jobinfoService.removeById(jobinfo);
+        boolean b = jobinfoService.updateById(jobinfo);
+        //boolean b = jobinfoService.removeById(jobinfo);
         if (b){
             LambdaQueryWrapper<Resume> lambdaQueryWrapper = Wrappers.lambdaQuery();
             lambdaQueryWrapper.eq(Resume::getJobid,jobinfo.getId());
